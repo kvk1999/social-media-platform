@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/post');
+const Post = require('../models/Post'); // Ensure case matches the file name
 const User = require('../models/User');
 const Comment = require('../models/Comment');
 
