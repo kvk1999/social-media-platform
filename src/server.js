@@ -11,7 +11,7 @@ app.use(cors())
 
 app.use(express.json())
 
-const PORT = process.env.PORT || 3500
+const PORT = process.env.PORT || 3001
 
 // API ROUTES
 
