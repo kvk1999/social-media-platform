@@ -1,0 +1,403 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "SOCIAL MEDIA DEPLOY",
+    "dateExported": "2024-03-21T05:45:07.869Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "2e999834-fbca-4411-b4fe-7316a7b7c351",
+            "name": "AUTH",
+            "containerId": "",
+            "created": "2024-03-13T08:45:11.607Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "POST",
+            "containerId": "",
+            "created": "2024-03-13T08:45:11.609Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "USERS",
+            "containerId": "",
+            "created": "2024-03-13T08:45:11.610Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "0113bbd0-6ace-4495-ab94-4588e5856401",
+            "name": "PROFILE",
+            "containerId": "",
+            "created": "2024-03-13T08:45:11.611Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "74f86c2a-893d-4cb9-bd59-5dc7bc410eff",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "2e999834-fbca-4411-b4fe-7316a7b7c351",
+            "name": "REGISTER",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-13T08:45:11.608Z",
+            "modified": "2024-03-20T18:04:17.512Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"Jack Jordan\",\n\"email\":\"jack@jordan.com\",\n\"password\": \"12345678\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "034979ce-5c19-4f72-9b2f-60dcca29b210",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "CREATE POST",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-13T08:45:11.609Z",
+            "modified": "2024-03-20T18:38:23.573Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"content\": \"Good morning Team\"\n}\n",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTU5ODQ4LCJleHAiOjE3MTA5NjcwNDh9.ClZjnF4F0pvzLj2oisyroU0uU2-jsasN3HQzaTaX_1M"
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c0858cd-4084-4ac3-9ad4-9e3d1972724c",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "2e999834-fbca-4411-b4fe-7316a7b7c351",
+            "name": "LOGIN",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-03-13T08:45:11.610Z",
+            "modified": "2024-03-20T18:06:53.220Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\"email\":\"superadmin@superadmin.com\",\n\"password\": \"123456\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "d5b75af3-835f-4a47-8da5-b9b60ed1ba10",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "GET USERS WITH TOKEN SUPER_ADMIN",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-13T08:45:11.611Z",
+            "modified": "2024-03-20T15:55:41.283Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTQ3ODg5LCJleHAiOjE3MTA5NTUwODl9.JjOuwqE1LSNIkQ4PfLXMIAEMSMRx8mfdqMCZj48Jhtc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "92e81adc-3ad4-4347-8d75-b01695589c5b",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "0113bbd0-6ace-4495-ab94-4588e5856401",
+            "name": "UPDATE PROFILE",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/profile",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2024-03-13T08:45:11.612Z",
+            "modified": "2024-03-20T18:00:57.936Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"Mark Anthony\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTU3NDY4LCJleHAiOjE3MTA5NjQ2Njh9.wmdBAcJhKKqKgRcaFTiEOUR2DTcz2CKPjk1yTpuOmPs"
+            },
+            "tests": []
+        },
+        {
+            "_id": "550293bc-7090-49b8-ab1b-d1d9b94cb6f7",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "DELETE POST",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/65fad4814b7ed40dacac0872",
+            "method": "DELETE",
+            "sortNum": 20000,
+            "created": "2024-03-13T08:45:11.613Z",
+            "modified": "2024-03-20T12:30:19.706Z",
+            "headers": [],
+            "params": [],
+            "reqType": "del",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWZhZDA2YTRiN2VkNDBkYWNhYzA4NmQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTA5MzYyNDIsImV4cCI6MTcxMDk0MzQ0Mn0.m9UGPZdwjshEy08hrFGpVIGUVwVOfSxhf-XjxCprbfs"
+            },
+            "tests": []
+        },
+        {
+            "_id": "64c84684-8d80-425c-9816-31d36c10c73a",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "GET POST BY ID ANY USER",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/65fad83a4b7ed40dacac0876",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2024-03-13T08:45:11.614Z",
+            "modified": "2024-03-20T12:38:06.250Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWZhZDA2YTRiN2VkNDBkYWNhYzA4NmQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTA5MzYyNDIsImV4cCI6MTcxMDk0MzQ0Mn0.m9UGPZdwjshEy08hrFGpVIGUVwVOfSxhf-XjxCprbfs"
+            },
+            "tests": []
+        },
+        {
+            "_id": "bf520153-8fff-4d1c-b8e7-916239334e19",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "GET PROFILE WITH TOKEN",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/profile",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-03-13T08:45:11.615Z",
+            "modified": "2024-03-20T16:01:39.913Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTQ3ODg5LCJleHAiOjE3MTA5NTUwODl9.JjOuwqE1LSNIkQ4PfLXMIAEMSMRx8mfdqMCZj48Jhtc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "353eef8e-c994-4229-9794-934952129a93",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "0113bbd0-6ace-4495-ab94-4588e5856401",
+            "name": "GET PROFILE WITH TOKEN",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/profile",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-03-13T08:45:11.616Z",
+            "modified": "2024-03-13T08:49:15.286Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkZDhiMDYwZDlkOGI3ZDAxODY3MDQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTAwODYzMzQsImV4cCI6MTcxMDA5MzUzNH0.k9sbA6VedAzIVNOZhJFS6Iy_yv3KP1gPoTNrEwHrRLU"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b6c89d1f-e0e5-4e24-bc43-3d9c4881ec9b",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "UPDATE POST BY ID",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/65faf5a2e943fa246362b9d0",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-03-13T08:45:11.617Z",
+            "modified": "2024-03-20T14:42:09.859Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"content\": \"Hello my Friends!\"\n}",
+                "form": []
+            },
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWZhZDA2YTRiN2VkNDBkYWNhYzA4NmQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTA5NDU2MjgsImV4cCI6MTcxMDk1MjgyOH0.kyY3KVSvxNNv4cfdgGZ6OfwCmadD9lqxO9iuwmehtpc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "fcf12375-d0d4-458a-817b-c72c50dce27e",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "LIKE 👍 &  DISLIKE 👎 TO POST",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/like/65fb2d1fa124bb251a2bb2b5",
+            "method": "PUT",
+            "sortNum": 35000,
+            "created": "2024-03-13T08:45:11.618Z",
+            "modified": "2024-03-20T18:39:01.302Z",
+            "headers": [],
+            "params": [],
+            "reqType": "put",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTU5ODQ4LCJleHAiOjE3MTA5NjcwNDh9.ClZjnF4F0pvzLj2oisyroU0uU2-jsasN3HQzaTaX_1M"
+            },
+            "tests": []
+        },
+        {
+            "_id": "8c9a8eee-ccfc-49f9-89ab-914fb43bd479",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "GET OWN POST",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/own",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-03-13T08:45:11.619Z",
+            "modified": "2024-03-20T14:46:43.527Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWZhZDA2YTRiN2VkNDBkYWNhYzA4NmQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTA5NDU2MjgsImV4cCI6MTcxMDk1MjgyOH0.kyY3KVSvxNNv4cfdgGZ6OfwCmadD9lqxO9iuwmehtpc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f76f9fa0-6161-4bb6-812f-30c18cc79dc2",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "GET POST USER ID",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/posts/65ef8bf56801986a3dda66a6",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-03-13T08:45:11.620Z",
+            "modified": "2024-03-13T08:49:02.950Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVmOGJmNTY4MDE5ODZhM2RkYTY2YTYiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTAxOTc3NTgsImV4cCI6MTcxMDIxMjE1OH0.pE6vBxeYCbxBx4P57sNMelC9FNndb3ZgL9Za_ez7ClE"
+            },
+            "tests": []
+        },
+        {
+            "_id": "728e63ef-ba51-4163-b556-2381da75a315",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "GET ALL USERS POST ",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/posts/",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-03-13T08:45:11.621Z",
+            "modified": "2024-03-20T14:49:13.684Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTQ2MTM2LCJleHAiOjE3MTA5NTMzMzZ9.5lSRkOQMMyxk6lwYoZb21TSAXxewPsabcY7NVODa2do"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e89840f4-d3a8-4a70-be86-d0f23e38a914",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "GET PROFILE BY EMAIL QUERY FILTERS (super_admin) Copy",
+            "url": "http://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users?email=user",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-03-19T13:26:18.818Z",
+            "modified": "2024-03-19T13:27:15.911Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "email",
+                    "value": "user",
+                    "isPath": false
+                }
+            ],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1LCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTQ4MTU1LCJleHAiOjE3MDk5NTUzNTV9.IpjAMfECybvx-WJ5Dh5YOnvHblpLh7WHmLjTeYcaO10"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e0102c7b-766b-40b7-a21d-9a73b2a19015",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "650d9d2e-cf94-4632-b2fd-f0e15de10a61",
+            "name": "GET USER POST BY ID",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/posts/65fafaeb701649d18549a38",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-03-13T08:45:11.622Z",
+            "modified": "2024-03-20T15:04:42.319Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTQ2MTM2LCJleHAiOjE3MTA5NTMzMzZ9.5lSRkOQMMyxk6lwYoZb21TSAXxewPsabcY7NVODa2do"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c0c87911-8dce-4989-ba42-d498d90ae567",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "DELETE USER (SUPER_ADMIN)",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/65ef98fd2294f6789077eed5",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2024-03-19T13:51:18.148Z",
+            "modified": "2024-03-20T18:27:57.954Z",
+            "headers": [],
+            "params": [],
+            "reqType": "del",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTU4MDEzLCJleHAiOjE3MTA5NjUyMTN9.pAL67bhxRsGOnYK0Zq7FRU5F-5hxoiJcvC1f-QtpgDA"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f0f3dafa-3008-4fb2-b1e1-81154c7bc135",
+            "colId": "d50a66d5-e235-4eb9-b2c4-ed3f75c7c99e",
+            "containerId": "da2aa3cc-dd72-43f5-af7c-1a25521b3c1a",
+            "name": "GET POST BY USER ID (USERS PATH)",
+            "url": "https://social-media-backend-dev-dmjn.1.us-1.fl0.io/api/users/posts/65eebde6af5c0f55427ff54f",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-03-20T15:47:47.863Z",
+            "modified": "2024-03-20T15:49:49.653Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVlYmRlNmFmNWMwZjU1NDI3ZmY1NGYiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwOTQ3ODg5LCJleHAiOjE3MTA5NTUwODl9.JjOuwqE1LSNIkQ4PfLXMIAEMSMRx8mfdqMCZj48Jhtc"
+            },
+            "tests": []
+        }
+    ]
+}
