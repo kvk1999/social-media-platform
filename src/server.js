@@ -29,7 +29,7 @@ dbConnection()
   .then(() => {
     console.log("Database connected")
     app.listen(PORT, () => {
-      console.log(`server is running" ${PORT}`)
+      console.log(`server is running" localhost:${PORT}`)
     })
   })
 
