@@ -1,38 +1,46 @@
-import express from "express"
-import "dotenv/config"
-import { dbConnection } from "./database/db.js"
-import router from "./routes/router.js"
-import cors from "cors"
-const app = express()
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser'; // Importing the entire body-parser module
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+import commentRoutes from './routes/commentRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
+import storyRoutes from './routes/storyRoutes.js';
+import friendRoutes from './routes/friendRoutes.js';
+import connectDB from './config/db.js';
 
-app.use(cors())
+dotenv.config();
 
-//parse body
+const app = express();
 
-app.use(express.json())
+// Connect to the database
+connectDB();
 
-const PORT = process.env.PORT || 3001
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());  // Using bodyParser's json method
+app.use(bodyParser.urlencoded({ extended: true }));  // Using bodyParser's urlencoded method
 
-// API ROUTES
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/stories', storyRoutes);
+app.use('/api/friends', friendRoutes);
 
-app.get("/api/healthy", (req, res) => {
-  res.status(200).json({ success: true, message: "server is healthy" })
-})
+app.get('/', (req, res) => {
+  res.send('Welcome to the backend API');
+});
 
-app.use("/api", router)
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 
-//app.use(router)
+export default app;
 
-// if don't write nothing inside (), the path change to => localhost:3500/auth/login
-
-dbConnection()
-  .then(() => {
-    console.log("Database connected")
-    app.listen(PORT, () => {
-      console.log(`server is running localhost:${PORT}`)
-    })
-  })
-
-  .catch((error) => {
-    console.log(error)
-  })
