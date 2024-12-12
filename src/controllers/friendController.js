@@ -1,5 +1,4 @@
 import Friend from '../models/Friends.js';
-import FriendRequest from '../models/FriendRequest.js';
 import User from '../models/User.js';
 
 // Send a friend request

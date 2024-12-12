@@ -8,7 +8,7 @@ import {
 const router = express.Router();
 
 // Get all notifications for a user
-router.get('/:userId', getNotifications);
+router.get('/notifications/:userId', getNotifications);
 
 // Create a new notification
 router.post('/create', createNotification);
