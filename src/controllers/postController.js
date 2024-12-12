@@ -77,3 +77,45 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: error.message }); // Handle any errors
   }
 };
+
+// Like a post
+export const likePost = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      { $inc: { likes: 1 } },  // Increment the likes
+      { new: true }  // Return the updated post
+    );
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.status(200).json(post);  // Return updated post with new likes count
+  } catch (error) {
+    res.status(500).json({ message: 'Error liking the post', error });
+  }
+};
+
+// Unlike a post
+export const unlikePost = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      { $inc: { likes: -1 } },  // Decrement the likes
+      { new: true }  // Return the updated post
+    );
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.status(200).json(post);  // Return updated post with new likes count
+  } catch (error) {
+    res.status(500).json({ message: 'Error unliking the post', error });
+  }
+};
