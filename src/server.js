@@ -44,17 +44,17 @@ const verifyToken = (req, res, next) => {
 };
 
 // Routes
-app.use('/api/auth', authRoutes); // Authentication routes
-app.use('/api/users', userRoutes); // User routes
-app.use('/api/posts', postRoutes); // Post routes
-app.use('/api/comments', commentRoutes); // Comment routes
-app.use('/api/notifications', notificationRoutes); // Notification routes
-app.use('/api/newsfeed', newsfeedRoutes); // Newsfeed routes
-app.use('/api/stories', storyRoutes); // Story routes
-app.use('/api/friends', friendRoutes); // Friend routes
+app.use('/api/v1/auth', authRoutes); // Authentication routes
+app.use('/api/v1/users', userRoutes); // User routes
+app.use('/api/v1/posts', postRoutes); // Post routes
+app.use('/api/v1/comments', commentRoutes); // Comment routes
+app.use('/api/v1/notifications', notificationRoutes); // Notification routes
+app.use('/api/v1/newsfeed', newsfeedRoutes); // Newsfeed routes
+app.use('/api/v1/stories', storyRoutes); // Story routes
+app.use('/api/v1/friends', friendRoutes); // Friend routes
 
 // Authentication Verification Route
-app.get('/api/auth/verify', verifyToken, (req, res) => {
+app.get('/api/v1/auth/verify', verifyToken, (req, res) => {
   // If the token is valid, return the user's username (or any other user-related data)
   res.status(200).json({ success: true, username: req.user.username });
 });
