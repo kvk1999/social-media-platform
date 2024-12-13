@@ -1,43 +1,64 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+import jwt from 'jwt-simple';
+import User from '../models/User.js'; // Assuming you have a User model
+import dotenv from 'dotenv';
 
-// Register new user
+dotenv.config();
+
+// Register function
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).send('User already exists');
+    }
+
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword });
 
+    // Create a new user
+    const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ message: 'User created successfully' });
+
+    res.status(201).send('User registered successfully');
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).send('Server error');
   }
 };
 
-// Login user
+// Login function
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    // Find user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).send('Invalid username or password');
+    }
 
+    // Compare password with hashed password stored in DB
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!isMatch) {
+      return res.status(400).send('Invalid username or password');
+    }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ token });
+    // Generate JWT token
+    const token = jwt.encode({ username: user.username, id: user._id }, process.env.SECRET_KEY);
+    res.json({ token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).send('Server error');
   }
 };
 
-// Logout controller
+// Logout function
 export const logout = (req, res) => {
-    // For example, clear the session or JWT token to log the user out
-    res.clearCookie('token'); // Assuming you're using a cookie-based token
-    res.status(200).json({ message: 'Logged out successfully' });
-  };
+  // Usually, logout is handled on the client-side by deleting the token (e.g., from localStorage)
+  // So we send a response indicating successful logout
+  res.json({ message: 'Logged out successfully' });
+};
