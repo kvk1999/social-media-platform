@@ -40,6 +40,7 @@ export const register = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 // Login function
 export const login = async (req, res) => {
   const { username, password } = req.body;
