@@ -8,7 +8,7 @@ import {
 const router = express.Router();
 
 // Route to get all newsfeed posts
-router.get("/", getAllNewsfeedPosts);
+router.get("/all", getAllNewsfeedPosts);
 
 // Route to create a new post
 router.post("/", createNewsfeedPost);

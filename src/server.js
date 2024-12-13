@@ -11,6 +11,7 @@ import notificationRoutes from './routes/notificationRoutes.js';
 import storyRoutes from './routes/storyRoutes.js';
 import friendRoutes from './routes/friendRoutes.js';
 import newsfeedRoutes from './routes/newsfeedRoutes.js';
+import jwt from 'jwt-simple';
 
 dotenv.config();
 
@@ -24,15 +25,39 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// JWT authentication middleware
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1]; // Extract token from the header
+
+  if (!token) {
+    return res.status(403).send('Token required');
+  }
+
+  try {
+    // Verify the token
+    const decoded = jwt.decode(token, process.env.SECRET_KEY);
+    req.user = decoded; // Attach the decoded user data to the request object
+    next();
+  } catch (err) {
+    return res.status(401).send('Invalid or expired token');
+  }
+};
+
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/posts', postRoutes);
-app.use('/api/comments', commentRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/newsfeed', newsfeedRoutes);
-app.use('/api/stories', storyRoutes);
-app.use('/api/friends', friendRoutes);
+app.use('/api/auth', authRoutes); // Authentication routes
+app.use('/api/users', userRoutes); // User routes
+app.use('/api/posts', postRoutes); // Post routes
+app.use('/api/comments', commentRoutes); // Comment routes
+app.use('/api/notifications', notificationRoutes); // Notification routes
+app.use('/api/newsfeed', newsfeedRoutes); // Newsfeed routes
+app.use('/api/stories', storyRoutes); // Story routes
+app.use('/api/friends', friendRoutes); // Friend routes
+
+// Authentication Verification Route
+app.get('/api/auth/verify', verifyToken, (req, res) => {
+  // If the token is valid, return the user's username (or any other user-related data)
+  res.status(200).json({ success: true, username: req.user.username });
+});
 
 // Root route
 app.get('/', (req, res) => {
@@ -40,7 +65,7 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
