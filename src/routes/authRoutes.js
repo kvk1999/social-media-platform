@@ -1,9 +1,8 @@
 import express from 'express';
-import jwt from 'jwt-simple';
-import bcrypt from 'bcrypt';
-import User from '../models/User.js'; // Assuming you have a User model
+import { login, register, logout } from '../controllers/authController.js'; // Import controller functions
 import dotenv from 'dotenv';
-import { login, register, logout } from '../controllers/authController.js'; // Add logout here
+
+dotenv.config();
 
 const router = express.Router();
 
@@ -14,6 +13,6 @@ router.post('/register', register);
 router.post('/login', login);
 
 // Logout route
-router.post('/logout', logout);  // Use the logout function here
+router.post('/logout', logout); // Logout functionality
 
 export default router;
