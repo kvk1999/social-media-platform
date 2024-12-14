@@ -1,26 +1,35 @@
-import API from './api';
+// services/postService.js
+import API from './api'; // Assuming you have an axios instance
 
+// Fetch all posts
 export const fetchPosts = async () => {
-  const response = await API.get('/posts');
-  return response.data;
+  try {
+    const response = await API.get('/posts');
+    return response.data; // Returns the list of posts
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error; // Propagate error to be handled in the component
+  }
 };
 
-export const fetchPostById = async (postId) => {
-  const response = await API.get(`/posts/${postId}`);
-  return response.data;
-};
-
+// Create a new post
 export const createPost = async (postData) => {
-  const response = await API.post('/posts', postData);
-  return response.data;
+  try {
+    const response = await API.post('/posts', postData);
+    return response.data; // Returns the created post
+  } catch (error) {
+    console.error('Error creating post:', error);
+    throw error;
+  }
 };
 
-export const updatePost = async (postId, updatedData) => {
-  const response = await API.put(`/posts/${postId}`, updatedData);
-  return response.data;
-};
-
+// Delete a post by its ID
 export const deletePost = async (postId) => {
-  const response = await API.delete(`/posts/${postId}`);
-  return response.data;
+  try {
+    const response = await API.delete(`/posts/${postId}`);
+    return response.data; // Returns the result of the deletion (e.g., success message)
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    throw error;
+  }
 };

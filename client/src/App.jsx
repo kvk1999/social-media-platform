@@ -1,32 +1,66 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Auth/Login"; // Ensure this is the correct import for Login
-import HomePage from "./pages/HomePage";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { PostProvider } from './context/PostContext';
+import { CommentProvider } from './context/CommentContext';
+import { FriendProvider } from './context/FriendContext';
+import { NotificationProvider } from './context/NotificationContext';
+import { StoryProvider } from './context/StoryContext';
+import Home from './pages/Home';
+import ProfilePage from './pages/Profile';
+import PostPage from './pages/Post';
+import NotificationsPage from './pages/Notifications';
+import FriendRequestsPage from './pages/FriendRequests';
+import StoriesPage from './pages/Stories';
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
+import EditProfilePage from './pages/EditProfile';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import './styles/globals.css'; // Global CSS (including Tailwind)
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   useEffect(() => {
-    // Check if token exists in localStorage
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true); // If token exists, user is authenticated
-    }
+    // This effect can be used to perform any necessary initializations, 
+    // like checking user authentication status on load.
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        {/* If user is not authenticated, redirect to login */}
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <Login />} />
-        
-        {/* If user is authenticated, they can access home */}
-        <Route path="/home" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
-        
-        {/* Default route redirects to login if no path is matched */}
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <PostProvider>
+        <CommentProvider>
+          <FriendProvider>
+            <NotificationProvider>
+              <StoryProvider>
+                <Router>
+                  <div className="min-h-screen flex flex-col bg-gray-100">
+                    {/* Navbar and Sidebar (always visible on most pages) */}
+                    <Navbar />
+                    <div className="flex">
+                      <Sidebar />
+                      <div className="flex-grow p-6">
+                        {/* Routing to different pages */}
+                        <Routes>
+                          <Route path="/" element={<Home />} />
+                          <Route path="/profile" element={<ProfilePage />} />
+                          <Route path="/profile/edit" element={<EditProfilePage />} />
+                          <Route path="/post/:postId" element={<PostPage />} />
+                          <Route path="/notifications" element={<NotificationsPage />} />
+                          <Route path="/friend-requests" element={<FriendRequestsPage />} />
+                          <Route path="/stories" element={<StoriesPage />} />
+                          <Route path="/login" element={<LoginPage />} />
+                          <Route path="/register" element={<RegisterPage />} />
+                        </Routes>
+                      </div>
+                    </div>
+                  </div>
+                </Router>
+              </StoryProvider>
+            </NotificationProvider>
+          </FriendProvider>
+        </CommentProvider>
+      </PostProvider>
+    </AuthProvider>
   );
 };
 

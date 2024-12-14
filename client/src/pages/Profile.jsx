@@ -1,48 +1,52 @@
-// src/pages/ProfilePage.jsx
-import React, { useEffect, useState } from 'react';
-import { getUserProfile, updateUserProfile } from '../services/userService'; // import the relevant service
+import React, { useState, useEffect } from 'react';
+import { getUserById, updateUser, deleteUser } from '../services/userService'; 
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [newProfileData, setNewProfileData] = useState({ name: '', bio: '' });
+  const [error, setError] = useState(null);
+  const userId = 1; // Replace with the actual user ID (could be from state, context, or props)
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const profile = await getUserProfile();
-      setUserProfile(profile);
+      try {
+        const profile = await getUserById(userId);
+        setUserProfile(profile);
+      } catch (err) {
+        setError('Error fetching user profile');
+      }
     };
     fetchProfile();
-  }, []);
+  }, [userId]);
 
-  const handleProfileUpdate = async () => {
-    const updatedProfile = await updateUserProfile(newProfileData);
-    setUserProfile(updatedProfile); // Update the profile with new data
-    setIsEditing(false);
+  const handleUpdate = async () => {
+    const updatedProfile = { name: 'Jane Doe', bio: 'Updated bio' };
+    try {
+      const updatedUser = await updateUser(userId, updatedProfile);
+      setUserProfile(updatedUser);
+    } catch (err) {
+      setError('Error updating user profile');
+    }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await deleteUser(userId);
+      console.log(response.message); // e.g., "User deleted successfully"
+      setUserProfile(null); // Clear the profile data after deletion
+    } catch (err) {
+      setError('Error deleting user profile');
+    }
+  };
+
+  if (error) return <div>{error}</div>;
+  if (!userProfile) return <div>Loading...</div>;
+
   return (
-    <div className="profile-container">
-      {isEditing ? (
-        <div>
-          <input 
-            type="text" 
-            value={newProfileData.name} 
-            onChange={(e) => setNewProfileData({ ...newProfileData, name: e.target.value })} 
-          />
-          <textarea 
-            value={newProfileData.bio} 
-            onChange={(e) => setNewProfileData({ ...newProfileData, bio: e.target.value })} 
-          />
-          <button onClick={handleProfileUpdate}>Save</button>
-        </div>
-      ) : (
-        <div>
-          <h2>{userProfile?.name}</h2>
-          <p>{userProfile?.bio}</p>
-          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-        </div>
-      )}
+    <div>
+      <h2>{userProfile.name}</h2>
+      <p>{userProfile.bio}</p>
+      <button onClick={handleUpdate}>Update Profile</button>
+      <button onClick={handleDelete}>Delete Profile</button>
     </div>
   );
 };

@@ -1,21 +1,45 @@
-import API from './api';
+import API from './api'; // Assuming API.js contains the axios instance
 
-export const toggleLikePost = async (postId) => {
-  const response = await API.post(`/posts/${postId}`, likePost);
-  return response.data;
+// Like a post
+export const likePost = async (postId) => {
+  try {
+    const response = await API.post(`/likes/${postId}`);
+    return response.data; // Return the updated post with the like information
+  } catch (error) {
+    console.error('Error liking post:', error);
+    throw error;
+  }
 };
 
-export const toggleLikeComment = async (commentId) => {
-  const response = await API.post(`/comments/${commentId}`, likeComment);
-  return response.data;
+// Unlike a post
+export const unlikePost = async (postId) => {
+  try {
+    const response = await API.delete(`/likes/${postId}`);
+    return response.data; // Return the updated post with the like removed
+  } catch (error) {
+    console.error('Error unliking post:', error);
+    throw error;
+  }
 };
 
-export const toggleUnlikeComment = async (commentId) => {
-  const response = await API.delete(`/comments/${commentId}`, unlikeComment);
-  return response.data;
-}
+// Like a comment
+export const likeComment = async (commentId) => {
+  try {
+    const response = await API.post(`/likes/comment/${commentId}`);
+    return response.data; // Return the updated comment with the like information
+  } catch (error) {
+    console.error('Error liking comment:', error);
+    throw error;
+  }
+};
 
-export const toggleUlikePost = async (postId) => {
-    const response = await API.delete(`/posts/${postId}`, unlikePost);
-    return response.data;
-  };
+// Unlike a comment
+export const unlikeComment = async (commentId) => {
+  try {
+    const response = await API.delete(`/likes/comment/${commentId}`);
+    return response.data; // Return the updated comment with the like removed
+  } catch (error) {
+    console.error('Error unliking comment:', error);
+    throw error;
+  }
+};
