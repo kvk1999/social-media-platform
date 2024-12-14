@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// define the base url
+const baseURL = '/api/v1';
+
 const API = axios.create({
   baseURL: '/api', // Replace with your actual base URL
   headers: {

@@ -1,32 +1,48 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/ProfilePage.jsx
+import React, { useEffect, useState } from 'react';
+import { getUserProfile, updateUserProfile } from '../services/userService'; // import the relevant service
 
 const Profile = () => {
-  const [profile, setProfile] = useState({});
-
-  // Fetch profile data
-  const fetchProfile = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/profile');
-      const data = await response.json();
-      setProfile(data); // Set profile data to state
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-    }
-  };
+  const [userProfile, setUserProfile] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newProfileData, setNewProfileData] = useState({ name: '', bio: '' });
 
   useEffect(() => {
-    fetchProfile(); // Fetch profile when component mounts
+    const fetchProfile = async () => {
+      const profile = await getUserProfile();
+      setUserProfile(profile);
+    };
+    fetchProfile();
   }, []);
 
+  const handleProfileUpdate = async () => {
+    const updatedProfile = await updateUserProfile(newProfileData);
+    setUserProfile(updatedProfile); // Update the profile with new data
+    setIsEditing(false);
+  };
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-semibold mb-4">User Profile</h1>
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <img src={profile.avatarUrl} alt="Profile" className="w-32 h-32 rounded-full mx-auto" />
-        <h2 className="text-xl font-semibold mt-4 text-center">{profile.username}</h2>
-        <p className="text-center text-gray-500">{profile.email}</p>
-        <p className="mt-4">{profile.bio}</p>
-      </div>
+    <div className="profile-container">
+      {isEditing ? (
+        <div>
+          <input 
+            type="text" 
+            value={newProfileData.name} 
+            onChange={(e) => setNewProfileData({ ...newProfileData, name: e.target.value })} 
+          />
+          <textarea 
+            value={newProfileData.bio} 
+            onChange={(e) => setNewProfileData({ ...newProfileData, bio: e.target.value })} 
+          />
+          <button onClick={handleProfileUpdate}>Save</button>
+        </div>
+      ) : (
+        <div>
+          <h2>{userProfile?.name}</h2>
+          <p>{userProfile?.bio}</p>
+          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+        </div>
+      )}
     </div>
   );
 };
