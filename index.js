@@ -10,7 +10,7 @@ import { app, server } from "./socket/socket.js";
 import path from "path";
 import axios from 'axios';
 
-const url = `http://localhost:3001`;
+const url = `https://social-media-platform-8hz1.onrender.com`;
 const interval = 30000;
 
 function reloadWebsite() {
