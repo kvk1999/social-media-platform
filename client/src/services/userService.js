@@ -1,48 +1,37 @@
-import axios from 'axios';
+import api from "./api";
 
-// Create a base URL for the API
-const API_URL = '/api/v1/users'; // Assuming the API endpoint is at /api/v1/users
-
-// Function to get a user by ID
-export const getUserById = async (userId) => {
-  try {
-    const response = await axios.get(`${API_URL}/${userId}`);
-    return response.data; // return the user data
-  } catch (error) {
-    console.error('Error fetching user by ID:', error);
-    throw error; // Rethrow the error so you can handle it in the component
-  }
+const getUserInfo = async () => {
+    return await api.get("/users/me");
 };
 
-// Function to get all users
-export const getAllUsers = async () => {
-  try {
-    const response = await axios.get(API_URL);
-    return response.data; // return the list of users
-  } catch (error) {
-    console.error('Error fetching all users:', error);
-    throw error;
-  }
+const getUserById = async (userId) => {
+    return await api.get(`/users/${userId}`);
 };
 
-// Function to update a user
-export const updateUser = async (userId, updatedUserData) => {
-  try {
-    const response = await axios.put(`${API_URL}/${userId}`, updatedUserData);
-    return response.data; // return the updated user data
-  } catch (error) {
-    console.error('Error updating user:', error);
-    throw error;
-  }
+const updateUser = async (userId, data) => {
+    return await api.put(`/users/${userId}`, data);
 };
 
-// Function to delete a user
-export const deleteUser = async (userId) => {
-  try {
-    const response = await axios.delete(`${API_URL}/${userId}`);
-    return response.data; // return the response message (e.g., "User deleted successfully")
-  } catch (error) {
-    console.error('Error deleting user:', error);
-    throw error;
-  }
+const changePassword = async (userId, data) => {
+    return await api.put(`/users/${userId}/password`, data);
 };
+
+const uploadProfilePicture = async (userId, formData) => {
+    return await api.post(`/users/${userId}/profile-picture`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    });
+};
+
+const getUsersList = async () => {
+    return await api.get("/users");
+};
+
+// Add deleteUser if needed:
+const deleteUser = async (userId) => {
+    return await api.delete(`/users/${userId}`);
+};
+
+// Export the individual functions
+export { getUserInfo, getUserById, updateUser, deleteUser };

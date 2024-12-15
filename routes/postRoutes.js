@@ -1,20 +1,28 @@
-// postRoutes.js
-import express from 'express';
-import auth from '../middlewares/auth.js';
-import { createPost, getAllPosts, getPostById, deletePost } from '../controllers/postController.js';
+import express from "express";
+import { isAuth } from "../middlewares/isAuth.js";
+import {
+  commentonPost,
+  deleteComment,
+  deletePost,
+  editCaption,
+  getAllPosts,
+  likeUnlikePost,
+  newPost,
+} from "../controllers/postControllers.js";
+import uploadFile from "../middlewares/multer.js";
 
 const router = express.Router();
 
-// Create a new post
-router.post('/', auth, createPost);
+router.post("/new", isAuth, uploadFile, newPost);
 
-// Get all posts
-router.get('/', getAllPosts);
+router.put("/:id", isAuth, editCaption);
+router.delete("/:id", isAuth, deletePost);
 
-// Get a single post by postId
-router.get('/:postId', getPostById);
+router.get("/all", isAuth, getAllPosts);
 
-// Delete a post
-router.delete('/:postId', auth, deletePost);
+router.post("/like/:id", isAuth, likeUnlikePost);
+
+router.post("/comment/:id", isAuth, commentonPost);
+router.delete("/comment/:id", isAuth, deleteComment);
 
 export default router;

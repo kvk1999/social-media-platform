@@ -1,62 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { getFriendRequests, acceptFriendRequest, declineFriendRequest } from '../services/friendService'; // Import friend services
+import axios from 'axios';
 
 const FriendRequests = () => {
-  const [friendRequests, setFriendRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [friends, setFriends] = useState([]);
 
-  // Fetch friend requests when the component mounts
   useEffect(() => {
-    const loadFriendRequests = async () => {
-      try {
-        const requests = await getFriendRequests();
-        setFriendRequests(requests); // Set friend requests to the state
-      } catch (error) {
-        console.error('Failed to fetch friend requests', error);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
-
-    loadFriendRequests();
-  }, []); // Re-run the effect when the component mounts
-
-  // Handle accepting a friend request
-  const handleAcceptRequest = async (userId) => {
-    try {
-      await acceptFriendRequest(userId);
-      setFriendRequests((prevRequests) => prevRequests.filter(request => request.userId !== userId)); // Remove accepted request from the list
-    } catch (error) {
-      console.error('Error accepting friend request:', error);
-    }
-  };
-
-  // Handle declining a friend request
-  const handleDeclineRequest = async (userId) => {
-    try {
-      await declineFriendRequest(userId);
-      setFriendRequests((prevRequests) => prevRequests.filter(request => request.userId !== userId)); // Remove declined request from the list
-    } catch (error) {
-      console.error('Error declining friend request:', error);
-    }
-  };
-
-  if (loading) {
-    return <div>Loading friend requests...</div>;
-  }
+    // Fetch friend requests from API
+    axios.get('/api/v1/friend')
+      .then((response) => setFriends(response.data))
+      .catch((error) => console.error('Error fetching friends:', error));
+  }, []);
 
   return (
-    <div>
-      <h1>Friend Requests</h1>
-      <ul>
-        {friendRequests.map((request) => (
-          <li key={request.userId}>
-            <p>{request.username} sent you a friend request.</p>
-            <button onClick={() => handleAcceptRequest(request.userId)}>Accept</button>
-            <button onClick={() => handleDeclineRequest(request.userId)}>Decline</button>
-          </li>
-        ))}
-      </ul>
+    <div className="min-h-screen bg-gray-100 p-4">
+      <div className="container mx-auto max-w-lg">
+        <h2 className="text-xl font-bold mb-4">Friend Requests</h2>
+        <div className="space-y-4">
+          {friends.map((friend) => (
+            <div key={friend.id} className="flex items-center p-4 bg-white rounded-lg shadow-md">
+              <img
+                src={friend.avatar}
+                alt={friend.name}
+                className="w-12 h-12 rounded-full mr-4"
+              />
+              <div className="flex-1">
+                <h3 className="text-gray-800">{friend.name}</h3>
+                <div className="flex space-x-2">
+                  <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+                    Accept
+                  </button>
+                  <button className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600">
+                    Decline
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

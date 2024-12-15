@@ -1,72 +1,134 @@
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectEmail, selectName, selectPassword, setEmail, setName, setPassword } from "../redux/features/auth/registerSlice";
-import authServices from "../services/authService";
+import { UserData } from "../context/UserContext";
+import { PostData } from "../context/PostContext";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [file, setFile] = useState("");
+  const [filePrev, setFilePrev] = useState("");
 
-    const name = useSelector(selectName);
-    const email = useSelector(selectEmail);
-    const password = useSelector(selectPassword);
+  const { registerUser, loading } = UserData();
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const { fetchPosts } = PostData();
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
+  const changeFileHandler = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
+    reader.readAsDataURL(file);
 
-        try {
-            const response = await authServices.register({ name, email, password });
-
-            if (response.status === 201) {
-                alert(response.data.message);
-
-                // clear form
-                dispatch(setName(''));
-                dispatch(setEmail(''));
-                dispatch(setPassword(''));
-
-                setTimeout(() => {
-                    navigate('/login');
-                }, 500);
-            }
-        } catch (error) {
-            alert(error.response.data.message);
-        }
+    reader.onloadend = () => {
+      setFilePrev(reader.result);
+      setFile(file);
     };
+  };
 
+  const navigate = useNavigate();
 
-    return (
-        <div className="container mx-auto mt-8">
-            <h1 className="text-3xl font-semibold text-center">Register</h1>
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const formdata = new FormData();
 
-            <form className="mt-8 space-y-6 max-w-sm mx-auto"
-                onSubmit={handleRegister}
-            >
-                <input type="text" name="name" id="name" placeholder="Name" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+    formdata.append("name", name);
+    formdata.append("email", email);
+    formdata.append("password", password);
+    formdata.append("gender", gender);
+    formdata.append("file", file);
+
+    registerUser(formdata, navigate, fetchPosts);
+  };
+  return (
+    <>
+      {loading ? (
+        <h1>Loading....</h1>
+      ) : (
+        <div className="flex justify-center">
+          <div className="flex flex-col justify-center items-center md:flex-row shadow-md rounded-xl max-w-7xl w-[90%] md:w-[50%] md:mt-[40px]">
+            <div className="w-full md:w-3/4">
+              <div className="text-xl cursor-pointer flex flex-col justify-center items-center mt-5 md:mt-0 py-4">
+                <h1 className="font-semibold text-xl md:text-3xl text-gray-600 m-2">
+                  Register to social media
+                </h1>
+              </div>
+
+              <form onSubmit={submitHandler}>
+                <div className="flex flex-col justify-center items-center m-2 space-y-6 md:space-y-8">
+                  {filePrev && (
+                    <img
+                      src={filePrev}
+                      className="w-[180px] h-[180px] rounded-full"
+                      alt=""
+                    />
+                  )}
+                  <input
+                    type="file"
+                    className="custom-input"
+                    onChange={changeFileHandler}
+                    accept="image/*"
+                    required
+                  />
+                  <input
+                    type="text"
+                    className="custom-input"
+                    placeholder="User Name"
                     value={name}
-                    onChange={(e) => dispatch(setName(e.target.value))}
-                />
-
-                <input type="email" name="email" id="email" placeholder="Email" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                  <input
+                    type="email"
+                    className="custom-input"
+                    placeholder="User Email"
                     value={email}
-                    onChange={(e) => dispatch(setEmail(e.target.value))}
-                />
-
-                <input type="password" name="password" id="password" placeholder="Password" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <input
+                    type="password"
+                    className="custom-input"
+                    placeholder="User Password"
                     value={password}
-                    onChange={(e) => dispatch(setPassword(e.target.value))}
-                />
-
-                <input type="submit" value="Register" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" />
-            </form>
-
-            <div className="text-center mt-4">
-                <Link to="/login" className="text-indigo-600 hover:underline">Already have an account? Login</Link>
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <select
+                    className="custom-input"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div className="text-center mt-7">
+                  <button className="auth-btn">Register</button>
+                </div>
+              </form>
             </div>
+
+            <div className="h-[100%] w-full md:w-1/3 bg-gradient-to-l from-blue-400 to-yellow-400 items-center justify-center flex">
+              <div className="text-white text-base font-semibold text-center my-10 space-y-2 m-2">
+                <h1 className="text-5xl">Have Account?</h1>
+                <h1>Login to Social Media</h1>
+                <Link
+                  to="/login"
+                  className="bg-white rounded-2xl px-4 text-emerald-400 py-1"
+                >
+                  Login
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-    )
-}
+      )}
+    </>
+  );
+};
 
 export default Register;

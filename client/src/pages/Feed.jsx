@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPosts, createPost, deletePost } from "../services/postservice";
+import { fetchPosts, createPost, deletePost } from "../services/postService";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);

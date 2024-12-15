@@ -1,66 +1,58 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { PostProvider } from './context/PostContext';
-import { CommentProvider } from './context/CommentContext';
-import { FriendProvider } from './context/FriendContext';
-import { NotificationProvider } from './context/NotificationContext';
-import { StoryProvider } from './context/StoryContext';
-import Home from './pages/Home';
-import ProfilePage from './pages/Profile';
-import PostPage from './pages/Post';
-import NotificationsPage from './pages/Notifications';
-import FriendRequestsPage from './pages/FriendRequests';
-import StoriesPage from './pages/Stories';
-import LoginPage from './pages/Login';
-import RegisterPage from './pages/Register';
-import EditProfilePage from './pages/EditProfile';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import './styles/globals.css'; // Global CSS (including Tailwind)
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import { UserData } from "./context/UserContext";
+import Account from "./pages/Account";
+import NavigationBar from "./components/NavigationBar";
+import NotFound from "./components/NotFound";
+import Reels from "./pages/Reels";
+import { Loading } from "./components/Loading";
+import UserAccount from "./pages/UserAccount";
+import Search from "./pages/Search";
+import ChatPage from "./pages/ChatPage";
 
 const App = () => {
-  useEffect(() => {
-    // This effect can be used to perform any necessary initializations, 
-    // like checking user authentication status on load.
-  }, []);
+  const { loading, isAuth, user } = UserData();
 
   return (
-    <AuthProvider>
-      <PostProvider>
-        <CommentProvider>
-          <FriendProvider>
-            <NotificationProvider>
-              <StoryProvider>
-                <Router>
-                  <div className="min-h-screen flex flex-col bg-gray-100">
-                    {/* Navbar and Sidebar (always visible on most pages) */}
-                    <Navbar />
-                    <div className="flex">
-                      <Sidebar />
-                      <div className="flex-grow p-6">
-                        {/* Routing to different pages */}
-                        <Routes>
-                          <Route path="/" element={<Home />} />
-                          <Route path="/profile" element={<ProfilePage />} />
-                          <Route path="/profile/edit" element={<EditProfilePage />} />
-                          <Route path="/post/:postId" element={<PostPage />} />
-                          <Route path="/notifications" element={<NotificationsPage />} />
-                          <Route path="/friend-requests" element={<FriendRequestsPage />} />
-                          <Route path="/stories" element={<StoriesPage />} />
-                          <Route path="/login" element={<LoginPage />} />
-                          <Route path="/register" element={<RegisterPage />} />
-                        </Routes>
-                      </div>
-                    </div>
-                  </div>
-                </Router>
-              </StoryProvider>
-            </NotificationProvider>
-          </FriendProvider>
-        </CommentProvider>
-      </PostProvider>
-    </AuthProvider>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={isAuth ? <Home /> : <Login />} />
+            <Route path="/reels" element={isAuth ? <Reels /> : <Login />} />
+            <Route
+              path="/account"
+              element={isAuth ? <Account user={user} /> : <Login />}
+            />
+            <Route
+              path="/user/:id"
+              element={isAuth ? <UserAccount user={user} /> : <Login />}
+            />
+            <Route path="/login" element={!isAuth ? <Login /> : <Home />} />
+            <Route
+              path="/register"
+              element={!isAuth ? <Register /> : <Home />}
+            />
+            <Route path="*" element={<NotFound />} />
+            <Route
+              path="/register"
+              element={!isAuth ? <Register /> : <Home />}
+            />
+            <Route path="/search" element={isAuth ? <Search /> : <Login />} />
+            <Route
+              path="/chat"
+              element={isAuth ? <ChatPage user={user} /> : <Login />}
+            />
+          </Routes>
+          {isAuth && <NavigationBar />}
+        </BrowserRouter>
+      )}
+    </>
   );
 };
 

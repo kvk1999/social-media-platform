@@ -1,45 +1,24 @@
-import API from './api'; // Assuming API.js contains the axios instance
+import api from './api';  // Assuming you are using an API service for HTTP requests
 
 // Like a post
-export const likePost = async (postId) => {
-  try {
-    const response = await API.post(`/likes/${postId}`);
-    return response.data; // Return the updated post with the like information
-  } catch (error) {
-    console.error('Error liking post:', error);
-    throw error;
-  }
+const likePost = async (postId) => {
+    return await api.post(`/posts/${postId}/like`);
 };
 
 // Unlike a post
-export const unlikePost = async (postId) => {
-  try {
-    const response = await API.delete(`/likes/${postId}`);
-    return response.data; // Return the updated post with the like removed
-  } catch (error) {
-    console.error('Error unliking post:', error);
-    throw error;
-  }
+const unlikePost = async (postId) => {
+    return await api.post(`/posts/${postId}/unlike`);
 };
 
 // Like a comment
-export const likeComment = async (commentId) => {
-  try {
-    const response = await API.post(`/likes/comment/${commentId}`);
-    return response.data; // Return the updated comment with the like information
-  } catch (error) {
-    console.error('Error liking comment:', error);
-    throw error;
-  }
+const likeComment = async (commentId) => {
+    return await api.post(`/comments/${commentId}/like`);
 };
 
 // Unlike a comment
-export const unlikeComment = async (commentId) => {
-  try {
-    const response = await API.delete(`/likes/comment/${commentId}`);
-    return response.data; // Return the updated comment with the like removed
-  } catch (error) {
-    console.error('Error unliking comment:', error);
-    throw error;
-  }
+const unlikeComment = async (commentId) => {
+    return await api.post(`/comments/${commentId}/unlike`);
 };
+
+// Export the functions
+export { likePost, unlikePost, likeComment, unlikeComment };

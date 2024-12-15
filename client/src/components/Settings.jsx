@@ -1,50 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
-  const [settings, setSettings] = useState({
-    theme: 'light',
-    notifications: true,
-  });
-
-  const handleToggle = (e) => {
-    const { name, value, type, checked } = e.target;
-    setSettings((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Settings</h1>
-      <div className="space-y-4">
-        {/* Theme Setting */}
-        <div>
-          <label className="block font-medium">Theme</label>
-          <select
-            name="theme"
-            value={settings.theme}
-            onChange={handleToggle}
-            className="p-2 border rounded"
-          >
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        </div>
-
-        {/* Notifications Toggle */}
-        <div>
-          <label className="block font-medium">Notifications</label>
-          <input
-            type="checkbox"
-            name="notifications"
-            checked={settings.notifications}
-            onChange={handleToggle}
-            className="ml-2"
-          />
-          <span className="ml-2">
-            {settings.notifications ? 'Enabled' : 'Disabled'}
-          </span>
+    <div className="min-h-screen bg-gray-100">
+      <div className="container mx-auto max-w-lg p-4">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Settings</h2>
+        <div className="space-y-4">
+          <label className="block">
+            <span className="text-gray-700">Username</span>
+            <input
+              type="text"
+              placeholder="Enter your username"
+              className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </label>
+          <label className="block">
+            <span className="text-gray-700">Email</span>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </label>
+          <button className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+            Save Changes
+          </button>
         </div>
       </div>
     </div>

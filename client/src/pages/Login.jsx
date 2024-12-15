@@ -1,62 +1,76 @@
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { selectEmail, selectPassword, setEmail, setPassword } from "../redux/features/auth/loginSlice";
-import { useDispatch, useSelector } from "react-redux";
-import authServices from "../services/authService";
+import { UserData } from "../context/UserContext";
+import { PostData } from "../context/PostContext";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const email = useSelector(selectEmail);
-    const password = useSelector(selectPassword);
+  const { loginUser, loading } = UserData();
+  const { fetchPosts } = PostData();
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    loginUser(email, password, navigate, fetchPosts);
+  };
+  return (
+    <>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="flex justify-center">
+          <div className="flex flex-col justify-center items-center md:flex-row shadow-md rounded-xl max-w-7xl w-[90%] md:w-[50%] md:mt-[140px]">
+            <div className="w-full md:w-3/4">
+              <div className="text-xl cursor-pointer flex flex-col justify-center items-center mt-5 md:mt-0 py-4">
+                <h1 className="font-semibold text-xl md:text-3xl text-gray-600 m-2">
+                  Login to social media
+                </h1>
+              </div>
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await authServices.login({ email, password });
-
-            if (response.status === 200) {
-                alert(response.data.message);
-
-                // clear form
-                dispatch(setEmail(""));
-                dispatch(setPassword(""));
-
-                setTimeout(() => {
-                    navigate("/dashboard");
-                }, 500);
-            }
-        } catch (error) {
-            alert(error.response.data.message);
-        }
-    }
-
-    return (
-        <div className="container mx-auto mt-8">
-            <h1 className="text-3xl font-semibold text-center">Login</h1>
-
-            <form className="mt-8 space-y-6 max-w-sm mx-auto"
-                onSubmit={handleLogin}
-            >
-                <input type="email" name="email" id="email" placeholder="Email" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    value={email} onChange={(e) => dispatch(setEmail(e.target.value))}
-
-                />
-
-                <input type="password" name="password" id="password" placeholder="Password" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    value={password} onChange={(e) => dispatch(setPassword(e.target.value))}
-                />
-
-                <input type="submit" value="Login" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" />
-            </form>
-
-            <div className="text-center mt-4">
-                <Link to="/register" className="text-indigo-600 hover:underline">Don't have an account? Register</Link>
+              <form onSubmit={submitHandler}>
+                <div className="flex flex-col justify-center items-center m-2 space-y-6 md:space-y-8">
+                  <input
+                    type="email"
+                    className="custom-input"
+                    placeholder="User Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <input
+                    type="password"
+                    className="custom-input"
+                    placeholder="User Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="text-center mt-7">
+                  <button className="auth-btn">Login</button>
+                </div>
+              </form>
             </div>
+
+            <div className="h-[100%] w-full md:w-1/3 bg-gradient-to-l from-blue-400 to-yellow-400 items-center justify-center flex">
+              <div className="text-white text-base font-semibold text-center my-10 space-y-2 m-2">
+                <h1 className="text-5xl">Don't Have Account?</h1>
+                <h1>Register to Social Media</h1>
+                <Link
+                  to="/register"
+                  className="bg-white rounded-2xl px-4 text-emerald-400 py-1"
+                >
+                  Register
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-    )
-}
+      )}
+    </>
+  );
+};
 
 export default Login;

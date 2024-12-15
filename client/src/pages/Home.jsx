@@ -1,21 +1,27 @@
-import { Link, Outlet } from "react-router-dom";
+import React from "react";
+import AddPost from "../components/AddPost";
+import PostCard from "../components/PostCard";
+import { PostData } from "../context/PostContext";
+import { Loading } from "../components/Loading";
 
 const Home = () => {
-    return (
-        <div className="container mx-auto mt-8 text-center">
-            <h1 className="text-4xl text-gray-800">Welcome to the Socialier!</h1>
-
-            <h3 className="text-2xl text-gray-600 mt-4">Please register or login to Buy Products</h3>
-
-            <div className="mt-8">
-                <Link to="/register" className="text-indigo-600 hover:underline">Register</Link> | <Link to="/login" className="text-indigo-600 hover:underline">Login</Link>
-            </div>
-
-            <div className="mt-8">
-                <Outlet />
-            </div>
+  const { posts, loading } = PostData();
+  return (
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          <AddPost type="post" />
+          {posts && posts.length > 0 ? (
+            posts.map((e) => <PostCard value={e} key={e._id} type={"post"} />)
+          ) : (
+            <p>No Post Yet</p>
+          )}
         </div>
-    )
-}
+      )}
+    </>
+  );
+};
 
 export default Home;
