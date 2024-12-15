@@ -1,5 +1,5 @@
 {
-  "name": "mern-social",
+  "name": "social-media-platform",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node backend/index.js",
     "dev": "nodemon backend/index.js",
-    "build": "npm install && cd frontend && npm install && npm run build"
+    "build": "npm install && cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
