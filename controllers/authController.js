@@ -1,7 +1,8 @@
 // authController.js
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import User from '../models/user.js';  // Correct if 'authController.js' is one directory level deeper
+
 
 // Register a new user
 export const registerUser = async (req, res) => {
