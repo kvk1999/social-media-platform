@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
 
 // Register a new user
-export const register = async (req, res) => {
+export const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
     await newUser.save();
 
     // Generate token
-    const token = jwt.sign({ userId: newUser._id }, 'your_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: newUser._id }, 'your_secret_key', { expiresIn: '15d' });
 
     res.status(201).json({ token, userId: newUser._id });
   } catch (error) {
@@ -33,7 +33,7 @@ export const register = async (req, res) => {
 };
 
 // Login an existing user
-export const login = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
 };
 
 // Logout a user
-export const logout = async (req, res) => {
+export const logoutUser = async (req, res) => {
   res.status(200).json({ message: 'User logged out' });
 };
 

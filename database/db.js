@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 export const connectDb = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL, {
-      dbName: "YoutubeMernSocial",
+      dbName: "SocialMedia",
     });
 
-    console.log("Connected To MongoDb");
+    console.log("Connected To MongoDB");
   } catch (error) {
     console.log(error);
   }

@@ -3,7 +3,7 @@ import {
   loginUser,
   logoutUser,
   registerUser,
-} from "../controllers/authControllers.js";
+} from "../controllers/authController.js";
 import uploadFile from "../middlewares/multer.js";
 
 const router = express.Router();
