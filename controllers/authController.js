@@ -1,7 +1,7 @@
 // authController.js
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';  // Correct if 'authController.js' is one directory level deeper
+import User from '../models/User.js';  // Correct if 'authController.js' is one directory level deeper
 
 
 // Register a new user
