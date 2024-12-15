@@ -1,54 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchPosts } from '../services/postservice';
+import { Link, Outlet } from "react-router-dom";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    return (
+        <div className="container mx-auto mt-8 text-center">
+            <h1 className="text-4xl text-gray-800">Welcome to the Socialier!</h1>
 
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const postsData = await fetchPosts();
-        console.log(postsData);  // Log the fetched posts
-        if (Array.isArray(postsData)) {
-          setPosts(postsData);  // Set posts if response is an array
-        } else {
-          setError('Invalid data format received');
-        }
-      } catch (error) {
-        setError('Failed to load posts');
-      } finally {
-        setLoading(false);
-      }
-    };
+            <h3 className="text-2xl text-gray-600 mt-4">Please register or login to Buy Products</h3>
 
-    getPosts();  // Fetch posts on component mount
-  }, []);
-
-  return (
-    <div>
-      <h1>Home Page</h1>
-
-      {loading && <p>Loading posts...</p>}
-      {error && <p>{error}</p>}
-
-      <div>
-        {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id} style={{ margin: '20px 0', borderBottom: '1px solid #ccc' }}>
-              <h3>{post.title}</h3>
-              <p>{post.content}</p>
-              <Link to={`/post/${post.id}`}>Read More</Link>
+            <div className="mt-8">
+                <Link to="/register" className="text-indigo-600 hover:underline">Register</Link> | <Link to="/login" className="text-indigo-600 hover:underline">Login</Link>
             </div>
-          ))
-        ) : (
-          <p>No posts available.</p>
-        )}
-      </div>
-    </div>
-  );
-};
+
+            <div className="mt-8">
+                <Outlet />
+            </div>
+        </div>
+    )
+}
 
 export default Home;

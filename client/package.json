@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "ecom": "file:..",
     "jsonwebtoken": "^9.0.2",
     "map": "^1.0.1",
     "react": "^18.2.0",

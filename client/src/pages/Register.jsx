@@ -1,116 +1,72 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Assuming you're using React Router for navigation
-import { registerUser } from '../services/authService'; // Assuming you have a register function in authService.js
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEmail, selectName, selectPassword, setEmail, setName, setPassword } from "../redux/features/auth/registerSlice";
+import authServices from "../services/authService";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const history = useNavigate(); // For navigation
 
-  // Handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const name = useSelector(selectName);
+    const email = useSelector(selectEmail);
+    const password = useSelector(selectPassword);
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setLoading(false);
-      return;
-    }
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-    try {
-      // Call the register function from the service
-      await registerUser(formData);
-      history.push('/login'); // Redirect to login after successful registration
-    } catch (error) {
-      setError('Failed to register. Please try again.');
-      setLoading(false);
-    }
-  };
 
-  return (
-    <div className="auth-container">
-      <h2>Register</h2>
-      
-      {/* Display error if any */}
-      {error && <p className="error">{error}</p>}
+        try {
+            const response = await authServices.register({ name, email, password });
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
+            if (response.status === 201) {
+                alert(response.data.message);
+
+                // clear form
+                dispatch(setName(''));
+                dispatch(setEmail(''));
+                dispatch(setPassword(''));
+
+                setTimeout(() => {
+                    navigate('/login');
+                }, 500);
+            }
+        } catch (error) {
+            alert(error.response.data.message);
+        }
+    };
+
+
+    return (
+        <div className="container mx-auto mt-8">
+            <h1 className="text-3xl font-semibold text-center">Register</h1>
+
+            <form className="mt-8 space-y-6 max-w-sm mx-auto"
+                onSubmit={handleRegister}
+            >
+                <input type="text" name="name" id="name" placeholder="Name" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    value={name}
+                    onChange={(e) => dispatch(setName(e.target.value))}
+                />
+
+                <input type="email" name="email" id="email" placeholder="Email" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    value={email}
+                    onChange={(e) => dispatch(setEmail(e.target.value))}
+                />
+
+                <input type="password" name="password" id="password" placeholder="Password" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    value={password}
+                    onChange={(e) => dispatch(setPassword(e.target.value))}
+                />
+
+                <input type="submit" value="Register" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" />
+            </form>
+
+            <div className="text-center mt-4">
+                <Link to="/login" className="text-indigo-600 hover:underline">Already have an account? Login</Link>
+            </div>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Registering...' : 'Register'}
-        </button>
-      </form>
-
-      <div>
-        <p>Already have an account? <a href="/login">Login here</a></p>
-      </div>
-    </div>
-  );
-};
+    )
+}
 
 export default Register;
