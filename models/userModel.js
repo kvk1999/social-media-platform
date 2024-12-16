@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    name: {
       type: String,
       required: true,
     },
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      required: false,
+      required: true,
       enum: ["male", "female"],
     },
     followers: [

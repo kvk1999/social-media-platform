@@ -290,10 +290,10 @@ This README provides clear documentation for your Social Media API, with descrip
 
 
 ``` 
-## POSTMAN API Documentation URL : https://web.postman.co/api/:apiId/documentation/38564233-3e2220d2-bcec-4b0d-be41-5acbf2064691/publish?workspaceId=dd6ea235-7476-4ee5-85fa-4b6d98828de4&requestId= 
+## POSTMAN API Documentation URL : https://documenter.getpostman.com/view/38564233/2sAYHzFi2t
 ```
 
-OR
 
 ```
-## You can use Vs.code Thunder Client Extention
+# URL: https://social-media-platform-8hz1.onrender.com/
+```
