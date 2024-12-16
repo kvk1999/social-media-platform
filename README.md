@@ -289,9 +289,15 @@ This README provides clear documentation for your Social Media API, with descrip
 
 
 
-``` 
-## POSTMAN API Documentation URL : https://documenter.getpostman.com/view/38564233/2sAYHzFi2t
 ```
+# Here's Hoppscotch API documentation
+```
+```
+# Here's Preview API documentation
+```
+
+<p align="center">
+<a src="./images/Screenshot 2024-12-16 233327.png>
 
 
 ```
