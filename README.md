@@ -290,13 +290,13 @@ This README provides clear documentation for your Social Media API, with descrip
 
 
 ```
-# Here's Hoppscotch API documentation
+### I made by Hoppscotch API documentation
 ```
 ```
-### Here's Preview API documentation
+### Here's the Preview API documentation
 ```
 
-![Image]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://raw.githubusercontent.com/kvk1999/social-media-platform/refs/heads/main/images/Screenshot%202024-12-16%20233327.png))
+![Image](https://raw.githubusercontent.com/kvk1999/social-media-platform/refs/heads/main/images/Screenshot%202024-12-16%20233327.png)
 
 
 ```
