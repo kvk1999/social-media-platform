@@ -296,7 +296,7 @@ This README provides clear documentation for your Social Media API, with descrip
 ### Here's the Preview API documentation
 ```
 
-![Image](https://raw.githubusercontent.com/kvk1999/social-media-platform/refs/heads/main/images/Screenshot%202024-12-16%20233327.png)
+![image](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-16%20233327.png)
 
 
 ```
