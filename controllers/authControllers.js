@@ -7,7 +7,6 @@ import cloudinary from "cloudinary";
 import { validationResult } from "express-validator";
 import { successResponse, errorResponse } from "../utils/responseHandler.js";  // Assuming responseHandler.js file exists
 
-// Register User
 export const registerUser = TryCatch(async (req, res) => {
   const { name, email, password, gender } = req.body;
   const file = req.file;
@@ -47,29 +46,56 @@ export const registerUser = TryCatch(async (req, res) => {
     },
   });
 
-  // Generate and send JWT token
-  generateToken(user._id, res);
+  // Generate JWT token
+  const token = generateToken(user._id, res);
 
-  // Send success response
-  successResponse(res, 201, "User registered successfully", user);
+  // Include the token in a cookie
+  res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'Strict', maxAge: 3600000 }); // 1 hour expiration
+
+  // Send success response with token
+  successResponse(res, 201, "User registered successfully", { user, token });
 });
 
 // Login User
 export const loginUser = TryCatch(async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if user exists
   const user = await User.findOne({ email });
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return errorResponse(res, 400, "Invalid email or password");
-  }
 
-  // Generate and send JWT token
+  if (!user)
+    return res.status(400).json({
+      message: "Invalid Credentials",
+    });
+
+  const comparePassword = await bcrypt.compare(password, user.password);
+
+  if (!comparePassword)
+    return res.status(400).json({
+      message: "Invalid Credentials",
+    });
+
+  // Generate the token and send it as a cookie
   generateToken(user._id, res);
 
-  // Send success response
-  successResponse(res, 200, "User logged in successfully", user);
+  // Include the token in the response body along with user data
+  res.json({
+    success: true,
+    message: "User logged in successfully",
+    data: {
+      profilePic: user.profilePic,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      gender: user.gender,
+      followers: user.followers,
+      followings: user.followings,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    },
+    token: res.cookies.token,  // This will include the token in the response
+  });
 });
+
 
 // Logout User
 export const logoutUser = TryCatch((req, res) => {
