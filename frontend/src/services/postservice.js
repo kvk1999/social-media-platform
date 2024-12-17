@@ -1,6 +1,7 @@
 // Import the 'api' instance which is assumed to be set up for interacting with your backend.
 import api from './api';  // Assuming the 'api.js' file exists in the same folder
 
+
 // Function to fetch posts from the API
 export const fetchPosts = async () => {
   try {

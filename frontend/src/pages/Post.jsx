@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchPosts, createPost, deletePost } from "../services/postService"; // Check if the path is correct
+import { fetchPosts, createPost, deletePost } from "../services/postservice"; // Check if the path is correct
 import { fetchCommentsByPost, addComment, updateComment, deleteComment } from '../services/commentService'; 
 import { likePost, unlikePost, likeComment, unlikeComment } from '../services/likeService';
 
