@@ -4,43 +4,35 @@ import generateToken from "../utils/generateToken.js";
 import getDataUrl from "../utils/urlGenrator.js";
 import bcrypt from "bcrypt";
 import cloudinary from "cloudinary";
-import { validationResult } from "express-validator";
-import { successResponse, errorResponse } from "../utils/responseHandler.js";  // Assuming responseHandler.js file exists
 
-// **REGISTER USER**
 export const registerUser = TryCatch(async (req, res) => {
   const { name, email, password, gender } = req.body;
+
   const file = req.file;
 
-  // Validate input fields
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return errorResponse(res, 400, "Validation errors", errors.array());
+  if (!name || !email || !password || !gender || !file) {
+    return res.status(400).json({
+      message: "Please give all values",
+    });
   }
 
-  // Ensure profile picture is provided
-  if (!file) {
-    return errorResponse(res, 400, "Profile picture is required");
-  }
-
-  // Check if user already exists
   let user = await User.findOne({ email });
-  if (user) {
-    return errorResponse(res, 400, "User already exists");
-  }
 
-  // Upload profile picture to Cloudinary
-  const fileUrl = getDataUrl(file); // Convert file to data URL
+  if (user)
+    return res.status(400).json({
+      message: "User Already Exist",
+    });
+
+  const fileUrl = getDataUrl(file);
+
+  const hashPassword = await bcrypt.hash(password, 10);
+
   const myCloud = await cloudinary.v2.uploader.upload(fileUrl.content);
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Create new user
   user = await User.create({
     name,
     email,
-    password: hashedPassword,
+    password: hashPassword,
     gender,
     profilePic: {
       id: myCloud.public_id,
@@ -48,64 +40,43 @@ export const registerUser = TryCatch(async (req, res) => {
     },
   });
 
-  // Generate JWT token and set it as a cookie
-  const token = generateToken(user._id, res);
+  generateToken(user._id, res);
 
-  // Send success response
-  successResponse(res, 201, "User registered successfully", {
-    user: {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      gender: user.gender,
-      profilePic: user.profilePic,
-    },
-    token, // Return token explicitly
+  res.status(201).json({
+    message: "User Registered",
+    user,
   });
 });
 
-// **LOGIN USER**
 export const loginUser = TryCatch(async (req, res) => {
   const { email, password } = req.body;
 
-  // Validate input fields
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return errorResponse(res, 400, "Validation errors", errors.array());
-  }
-
-  // Check if user exists
   const user = await User.findOne({ email });
-  if (!user) {
-    return errorResponse(res, 400, "Invalid email or password");
-  }
 
-  // Compare passwords
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return errorResponse(res, 400, "Invalid email or password");
-  }
+  if (!user)
+    return res.status(400).json({
+      message: "Invalid Credentials",
+    });
 
-  // Generate JWT token and set it as a cookie
-  const token = generateToken(user._id, res);
+  const comparePassword = await bcrypt.compare(password, user.password);
 
-  // Send success response
-  successResponse(res, 200, "User logged in successfully", {
-    user: {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      gender: user.gender,
-      profilePic: user.profilePic,
-    },
-    token, // Return token explicitly
+  if (!comparePassword)
+    return res.status(400).json({
+      message: "Invalid Credentials",
+    });
+
+  generateToken(user._id, res);
+
+  res.json({
+    message: "User Logged in",
+    user,
   });
 });
 
-
-
-// Logout User
 export const logoutUser = TryCatch((req, res) => {
-  res.cookie("token", "", { maxAge: 0 });  // Clear token cookie
-  successResponse(res, 200, "Logged out successfully");
+  res.cookie("token", "", { maxAge: 0 });
+
+  res.json({
+    message: "Logged out successfully",
+  });
 });
