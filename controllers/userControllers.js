@@ -7,12 +7,6 @@ import bcrypt from "bcrypt";
 export const myProfile = TryCatch(async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
 
-  if (!user) {
-    return res.status(404).json({
-      message: "User not found",
-    });
-  }
-
   res.json(user);
 });
 
@@ -21,7 +15,7 @@ export const userProfile = TryCatch(async (req, res) => {
 
   if (!user)
     return res.status(404).json({
-      message: "No User with this id",
+      message: "No User with is id",
     });
 
   res.json(user);
@@ -33,7 +27,7 @@ export const followandUnfollowUser = TryCatch(async (req, res) => {
 
   if (!user)
     return res.status(404).json({
-      message: "No User with this id",
+      message: "No User with is id",
     });
 
   if (user._id.toString() === loggedInUser._id.toString())
@@ -93,20 +87,14 @@ export const updateProfile = TryCatch(async (req, res) => {
 
   const file = req.file;
   if (file) {
-    try {
-      const fileUrl = getDataUrl(file);
+    const fileUrl = getDataUrl(file);
 
-      // Destroy old image from Cloudinary
-      await cloudinary.v2.uploader.destroy(user.profilePic.id);
+    await cloudinary.v2.uploader.destroy(user.profilePic.id);
 
-      // Upload new image to Cloudinary
-      const myCloud = await cloudinary.v2.uploader.upload(fileUrl.content);
+    const myCloud = await cloudinary.v2.uploader.upload(fileUrl.content);
 
-      user.profilePic.id = myCloud.public_id;
-      user.profilePic.url = myCloud.secure_url;
-    } catch (error) {
-      return res.status(500).json({ message: "Error uploading file" });
-    }
+    user.profilePic.id = myCloud.public_id;
+    user.profilePic.url = myCloud.secure_url;
   }
 
   await user.save();
@@ -136,24 +124,3 @@ export const updatePassword = TryCatch(async (req, res) => {
     message: "Password Updated",
   });
 });
-
-export const getUserProfile = (req, res) => {
-  // Assuming `req.user` contains the decoded token data (user info)
-  const user = req.user;  // user info attached by the `isAuth` middleware
-
-  // Fetch user data from the database (e.g., MongoDB, SQL)
-  // Here we'll just send back a mock response, but you would typically query your database
-
-  const userProfile = {
-    id: user.id,  // user id from the JWT token payload
-    name: user.name,  // user name from the JWT token payload (if included)
-    email: user.email,  // user email from the JWT token payload (if included)
-    // You can also retrieve more data from the database here
-  };
-
-  // Send the user profile in the response
-  res.json({
-    message: "User profile fetched successfully",
-    data: userProfile
-  });
-};
