@@ -7,6 +7,12 @@ import bcrypt from "bcrypt";
 export const myProfile = TryCatch(async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
 
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
   res.json(user);
 });
 
@@ -15,7 +21,7 @@ export const userProfile = TryCatch(async (req, res) => {
 
   if (!user)
     return res.status(404).json({
-      message: "No User with is id",
+      message: "No User with this id",
     });
 
   res.json(user);
@@ -27,7 +33,7 @@ export const followandUnfollowUser = TryCatch(async (req, res) => {
 
   if (!user)
     return res.status(404).json({
-      message: "No User with is id",
+      message: "No User with this id",
     });
 
   if (user._id.toString() === loggedInUser._id.toString())
@@ -87,14 +93,20 @@ export const updateProfile = TryCatch(async (req, res) => {
 
   const file = req.file;
   if (file) {
-    const fileUrl = getDataUrl(file);
+    try {
+      const fileUrl = getDataUrl(file);
 
-    await cloudinary.v2.uploader.destroy(user.profilePic.id);
+      // Destroy old image from Cloudinary
+      await cloudinary.v2.uploader.destroy(user.profilePic.id);
 
-    const myCloud = await cloudinary.v2.uploader.upload(fileUrl.content);
+      // Upload new image to Cloudinary
+      const myCloud = await cloudinary.v2.uploader.upload(fileUrl.content);
 
-    user.profilePic.id = myCloud.public_id;
-    user.profilePic.url = myCloud.secure_url;
+      user.profilePic.id = myCloud.public_id;
+      user.profilePic.url = myCloud.secure_url;
+    } catch (error) {
+      return res.status(500).json({ message: "Error uploading file" });
+    }
   }
 
   await user.save();
