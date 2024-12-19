@@ -6,7 +6,7 @@ export const connectDb = async () => {
       dbName: "SocialMedia",
     });
 
-    console.log("Connected To MongoDB");
+    console.log("Connected To MongoDb");
   } catch (error) {
     console.log(error);
   }

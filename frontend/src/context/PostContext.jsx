@@ -2,16 +2,13 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-// Create PostContext
 const PostContext = createContext();
 
-// PostContext provider component
 export const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [reels, setReels] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch posts and reels
   async function fetchPosts() {
     try {
       const { data } = await axios.get("/api/post/all");
@@ -27,7 +24,6 @@ export const PostContextProvider = ({ children }) => {
 
   const [addLoading, setAddLoading] = useState(false);
 
-  // Add a new post
   async function addPost(formdata, setFile, setFilePrev, setCaption, type) {
     setAddLoading(true);
     try {
@@ -45,7 +41,6 @@ export const PostContextProvider = ({ children }) => {
     }
   }
 
-  // Like a post
   async function likePost(id) {
     try {
       const { data } = await axios.post("/api/post/like/" + id);
@@ -57,7 +52,6 @@ export const PostContextProvider = ({ children }) => {
     }
   }
 
-  // Add a comment to a post
   async function addComment(id, comment, setComment, setShow) {
     try {
       const { data } = await axios.post("/api/post/comment/" + id, {
@@ -72,7 +66,6 @@ export const PostContextProvider = ({ children }) => {
     }
   }
 
-  // Delete a post
   async function deletePost(id) {
     setLoading(true);
     try {
@@ -87,7 +80,6 @@ export const PostContextProvider = ({ children }) => {
     }
   }
 
-  // Delete a comment from a post
   async function deleteComment(id, commentId) {
     try {
       const { data } = await axios.delete(
@@ -104,7 +96,6 @@ export const PostContextProvider = ({ children }) => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
   return (
     <PostContext.Provider
       value={{
@@ -125,5 +116,4 @@ export const PostContextProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use PostContext
 export const PostData = () => useContext(PostContext);
