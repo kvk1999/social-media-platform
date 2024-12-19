@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { BsChatFill, BsThreeDotsVertical } from "react-icons/bs";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { UserData } from "../context/UserContext";
 import { PostData } from "../context/PostContext";
+import { Reels } from "../context/ReelsContext"; // Importing Reels Context
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
@@ -18,20 +19,19 @@ const PostCard = ({ type, value }) => {
   const [show, setShow] = useState(false);
   const { user } = UserData();
   const { likePost, addComment, deletePost, loading, fetchPosts } = PostData();
+  const { onlineUsers } = SocketData();
+  const { reels } = Reels();  // Using the Reels context
 
   const formatDate = format(new Date(value.createdAt), "MMMM do");
 
   useEffect(() => {
-    for (let i = 0; i < value.likes.length; i++) {
-      if (value.likes[i] === user._id) setIsLike(true);
-    }
-  }, [value, user._id]);
+    setIsLike(value.likes.includes(user._id));
+  }, [value.likes, user._id]);
 
-  const likeHandler = () => {
-    setIsLike(!isLike);
-
+  const likeHandler = useCallback(() => {
+    setIsLike((prev) => !prev);
     likePost(value._id);
-  };
+  }, [likePost, value._id]);
 
   const [comment, setComment] = useState("");
 
@@ -56,36 +56,33 @@ const PostCard = ({ type, value }) => {
     setShowInput(true);
   };
 
-  const [caption, setCaption] = useState(value.caption ? value.caption : "");
+  const [caption, setCaption] = useState(value.caption || "");
   const [captionLoading, setCaptionLoading] = useState(false);
 
-  async function updateCaption() {
+  const updateCaption = async () => {
     setCaptionLoading(true);
     try {
-      const { data } = await axios.put("/api/post/" + value._id, { caption });
-
+      const { data } = await axios.put(`/api/post/${value._id}`, { caption });
       toast.success(data.message);
       fetchPosts();
       setShowInput(false);
       setCaptionLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Error updating caption");
       setCaptionLoading(false);
     }
-  }
+  };
 
   const [open, setOpen] = useState(false);
 
-  const oncloseLIke = () => {
+  const onCloseLikeModal = () => {
     setOpen(false);
   };
-
-  const { onlineUsers } = SocketData();
 
   return (
     <div className="bg-gray-100 flex items-center justify-center pt-3 pb-14">
       <SimpleModal isOpen={showModal} onClose={closeModal}>
-        <LikeModal isOpen={open} onClose={oncloseLIke} id={value._id} />
+        <LikeModal isOpen={open} onClose={onCloseLikeModal} id={value._id} />
         <div className="flex flex-col items-center justify-center gap-3">
           <button
             onClick={editHandler}
@@ -102,22 +99,18 @@ const PostCard = ({ type, value }) => {
           </button>
         </div>
       </SimpleModal>
+
       <div className="bg-white p-8 rounded-lg shadow-md max-w-md">
         <div className="flex items-center space-x-2">
-          <Link
-            className="flex items-center space-x-2"
-            to={`/user/${value.owner._id}`}
-          >
+          <Link className="flex items-center space-x-2" to={`/user/${value.owner._id}`}>
             <img
               src={value.owner.profilePic.url}
-              alt=""
+              alt={value.owner.name}
               className="w-8 h-8 rounded-full"
             />
-
             {onlineUsers.includes(value.owner._id) && (
               <div className="text-5xl font-bold text-green-400">.</div>
             )}
-
             <div>
               <p className="text-gray-800 font-semibold">{value.owner.name}</p>
               <div className="text-gray-500 text-sm">{formatDate}</div>
@@ -129,6 +122,7 @@ const PostCard = ({ type, value }) => {
               <button
                 onClick={() => setShowModal(true)}
                 className="hover:bg-gray-50 rounded-full p-1 text-2xl"
+                aria-label="More options"
               >
                 <BsThreeDotsVertical />
               </button>
@@ -147,6 +141,7 @@ const PostCard = ({ type, value }) => {
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
                 required
+                aria-label="Caption input"
               />
               <button
                 onClick={updateCaption}
@@ -158,6 +153,7 @@ const PostCard = ({ type, value }) => {
               <button
                 className="text-sm bg-red-500 text-white px-1 py-1 rounded-md"
                 onClick={() => setShowInput(false)}
+                aria-label="Cancel caption editing"
               >
                 X
               </button>
@@ -168,27 +164,31 @@ const PostCard = ({ type, value }) => {
         </div>
 
         <div className="mb-4">
-          {type === "post" ? (
-            <img
-              src={value.post.url}
-              alt=""
-              className="object-cover rounded-md"
+          {type === "reel" ? (
+            <video
+              src={value.reel.url}  // Assuming Reels are videos
+              alt="Reel content"
+              className="w-full h-[300px] object-cover rounded-md"
+              autoPlay
+              loop
+              muted
+              controls
             />
           ) : (
-            <video
+            <img
               src={value.post.url}
-              alt=""
-              className="w-[450px] h-[600px] object-cover rounded-md"
-              autoPlay
-              controls
+              alt="Post content"
+              className="object-cover rounded-md"
             />
           )}
         </div>
+
         <div className="flex items-center justify-between text-gray-500">
           <div className="flex items-center space-x-2">
             <span
               onClick={likeHandler}
               className="text-red-500 text-2xl cursor-pointer"
+              aria-label={isLike ? "Unlike" : "Like"}
             >
               {isLike ? <IoHeartSharp /> : <IoHeartOutline />}
             </span>
@@ -202,11 +202,13 @@ const PostCard = ({ type, value }) => {
           <button
             className="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
             onClick={() => setShow(!show)}
+            aria-label="Toggle comments"
           >
             <BsChatFill />
             <span>{value.comments.length} comments</span>
           </button>
         </div>
+
         {show && (
           <form onSubmit={addCommentHandler} className="flex gap-3">
             <input
@@ -215,6 +217,7 @@ const PostCard = ({ type, value }) => {
               placeholder="Enter Comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              aria-label="Comment input"
             />
             <button className="bg-gray-100 rounded-lg px-5 py-2" type="submit">
               Add
@@ -225,6 +228,7 @@ const PostCard = ({ type, value }) => {
         <hr className="mt-2 mb-2" />
         <p className="text-gray-800 font-semibold">Comments</p>
         <hr className="mt-2 mb-2" />
+
         <div className="mt-4">
           <div className="comments max-h-[200px] overflow-y-auto">
             {value.comments && value.comments.length > 0 ? (
@@ -247,45 +251,38 @@ const PostCard = ({ type, value }) => {
   );
 };
 
-export default PostCard;
-
 export const Comment = ({ value, user, owner, id }) => {
   const { deleteComment } = PostData();
 
   const deleteCommentHandler = () => {
     deleteComment(id, value._id);
   };
+
   return (
     <div className="flex items-center space-x-2 mt-2">
       <Link to={`/user/${value.user._id}`}>
         <img
           src={value.user.profilePic.url}
           className="w-8 h-8 rounded-full"
-          alt=""
+          alt="Commenter profile"
         />
       </Link>
       <div>
         <p className="text-gray-800 font-semibold">{value.user.name}</p>
-        <p className="text-gray-500 text-sm">{value.comment}</p>
+        <p>{value.text}</p>
       </div>
-
-      {owner === user._id ? (
-        ""
-      ) : (
-        <>
-          {value.user._id === user._id && (
-            <button onClick={deleteCommentHandler} className="text-red-500">
-              <MdDelete />
-            </button>
-          )}
-        </>
-      )}
-
-      {owner === user._id && (
-        <button onClick={deleteCommentHandler} className="text-red-500">
-          <MdDelete />
-        </button>
-      )}
+      {value.user._id === user._id || owner === user._id ? (
+        <div className="ml-auto">
+          <button
+            onClick={deleteCommentHandler}
+            className="text-red-500 text-lg"
+          >
+            <MdDelete />
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };
+
+export default PostCard;

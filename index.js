@@ -99,6 +99,7 @@ import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import storyRoutes from "./routes/storyRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import reelsRoutes from "./routes/reelsRoutes.js";
 
 //using routes
 app.use("/api/auth", authRoutes);
@@ -106,6 +107,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/story", storyRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/reels", reelsRoutes);
 
 const __dirname = path.resolve();
 
