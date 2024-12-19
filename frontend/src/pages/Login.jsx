@@ -15,6 +15,7 @@ const Login = () => {
     e.preventDefault();
     loginUser(email, password, navigate, fetchPosts);
   };
+
   return (
     <>
       {loading ? (
