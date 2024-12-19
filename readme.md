@@ -148,6 +148,12 @@ Feel free to update the repository and project-specific details to match your ac
 
 ---
 
+
+## API Documentation By
+
+Testfully documented API documentation (https://testfully.io/)
+
+
 ## Screenshots
 
 ![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-19%20231723.png)

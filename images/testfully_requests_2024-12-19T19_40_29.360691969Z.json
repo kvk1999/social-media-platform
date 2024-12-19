@@ -1,0 +1,932 @@
+{
+  "testfully": "1.15.0",
+  "createdAt": "2024-12-19T19:40:29.360696445Z",
+  "folders": [
+    {
+      "id": "1682714734",
+      "parentId": null,
+      "name": "SocialMedia",
+      "sortNumber": 1734619133359,
+      "executionMode": "NOT_SET",
+      "variables": [],
+      "headers": [],
+      "params": [],
+      "authentication": {
+        "type": "NOT_SET"
+      },
+      "proxy": {
+        "type": "NOT_SET",
+        "server": null
+      },
+      "beforeScript": "",
+      "afterScript": "",
+      "timeout": 0,
+      "delay": 0,
+      "sslVerification": "NOT_SET",
+      "followRedirects": "NOT_SET",
+      "maxRedirects": 0,
+      "history": "NOT_SET"
+    },
+    {
+      "id": "1031170297",
+      "parentId": "1682714734",
+      "name": "auth",
+      "sortNumber": 1734619133361,
+      "executionMode": "NOT_SET",
+      "variables": [],
+      "headers": [],
+      "params": [],
+      "authentication": {
+        "type": "NOT_SET"
+      },
+      "proxy": {
+        "type": "NOT_SET",
+        "server": null
+      },
+      "beforeScript": "",
+      "afterScript": "",
+      "timeout": 0,
+      "delay": 0,
+      "sslVerification": "NOT_SET",
+      "followRedirects": "NOT_SET",
+      "maxRedirects": 0,
+      "history": "NOT_SET"
+    },
+    {
+      "id": "177776452",
+      "parentId": "1682714734",
+      "name": "post",
+      "sortNumber": 1734619133363,
+      "executionMode": "NOT_SET",
+      "variables": [],
+      "headers": [],
+      "params": [],
+      "authentication": {
+        "type": "NOT_SET"
+      },
+      "proxy": {
+        "type": "NOT_SET",
+        "server": null
+      },
+      "beforeScript": "",
+      "afterScript": "",
+      "timeout": 0,
+      "delay": 0,
+      "sslVerification": "NOT_SET",
+      "followRedirects": "NOT_SET",
+      "maxRedirects": 0,
+      "history": "NOT_SET"
+    },
+    {
+      "id": "1673715663",
+      "parentId": "1682714734",
+      "name": "messages",
+      "sortNumber": 1734619133364,
+      "executionMode": "NOT_SET",
+      "variables": [],
+      "headers": [],
+      "params": [],
+      "authentication": {
+        "type": "NOT_SET"
+      },
+      "proxy": {
+        "type": "NOT_SET",
+        "server": null
+      },
+      "beforeScript": "",
+      "afterScript": "",
+      "timeout": 0,
+      "delay": 0,
+      "sslVerification": "NOT_SET",
+      "followRedirects": "NOT_SET",
+      "maxRedirects": 0,
+      "history": "NOT_SET"
+    },
+    {
+      "id": "955586138",
+      "parentId": "1682714734",
+      "name": "user",
+      "sortNumber": 1734619133366,
+      "executionMode": "NOT_SET",
+      "variables": [],
+      "headers": [],
+      "params": [],
+      "authentication": {
+        "type": "NOT_SET"
+      },
+      "proxy": {
+        "type": "NOT_SET",
+        "server": null
+      },
+      "beforeScript": "",
+      "afterScript": "",
+      "timeout": 0,
+      "delay": 0,
+      "sslVerification": "NOT_SET",
+      "followRedirects": "NOT_SET",
+      "maxRedirects": 0,
+      "history": "NOT_SET"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "634412957",
+      "parentFolderId": "1031170297",
+      "title": "register user",
+      "sortNumber": 1734619133371000,
+      "steps": [
+        {
+          "id": "1563952778",
+          "title": "register user",
+          "url": "http://localhost:3001/api/auth/register",
+          "method": "POST",
+          "type": "FORMDATA",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "BEARER_TOKEN",
+            "bearerToken": {
+              "token": "",
+              "prefix": "Bearer",
+              "bearer": "Authorization"
+            }
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": [
+              {
+                "name": "name",
+                "value": "john",
+                "type": "TEXT",
+                "downloadUrl": "",
+                "contentType": ""
+              },
+              {
+                "name": "email",
+                "value": "john@gmail.com",
+                "type": "TEXT",
+                "downloadUrl": "",
+                "contentType": ""
+              },
+              {
+                "name": "password",
+                "value": "password",
+                "type": "TEXT",
+                "downloadUrl": "",
+                "contentType": ""
+              },
+              {
+                "name": "gender",
+                "value": "male",
+                "type": "TEXT",
+                "downloadUrl": "",
+                "contentType": ""
+              },
+              {
+                "name": "file",
+                "value": "postman-cloud:///1efbb774-4385-46e0-8838-f52c80439546",
+                "type": "FILE",
+                "downloadUrl": "",
+                "contentType": ""
+              }
+            ],
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1929025128",
+      "parentFolderId": "1031170297",
+      "title": "login",
+      "sortNumber": 1734619133376000,
+      "steps": [
+        {
+          "id": "711114005",
+          "title": "login",
+          "url": "http://localhost:3001/api/auth/login",
+          "method": "POST",
+          "type": "JSON",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "BEARER_TOKEN",
+            "bearerToken": {
+              "token": "",
+              "prefix": "Bearer",
+              "bearer": "Authorization"
+            }
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": "{\n  \"email\":\"shardul@gmail.com\",\n  \"password\": \"password\"\n}",
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1244450547",
+      "parentFolderId": "1031170297",
+      "title": "logout",
+      "sortNumber": 1734619133381000,
+      "steps": [
+        {
+          "id": "60093920",
+          "title": "logout",
+          "url": "",
+          "method": "GET",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "592905598",
+      "parentFolderId": "177776452",
+      "title": "new post",
+      "sortNumber": 1734619133386000,
+      "steps": [
+        {
+          "id": "1488923755",
+          "title": "new post",
+          "url": "https://social-media-platform-l27s.onrender.com/api/post/new?type=post",
+          "method": "POST",
+          "type": "FORMDATA",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": [
+              {
+                "name": "caption",
+                "value": "first post",
+                "type": "TEXT",
+                "downloadUrl": "",
+                "contentType": ""
+              },
+              {
+                "name": "file",
+                "value": "153468-udgvcsyjit-1610879995.jpg",
+                "type": "FILE",
+                "downloadUrl": "",
+                "contentType": "image/jpeg"
+              }
+            ],
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "2021244361",
+      "parentFolderId": "177776452",
+      "title": "editCaption",
+      "sortNumber": 1734619133390000,
+      "steps": [
+        {
+          "id": "836855030",
+          "title": "editCaption",
+          "url": "",
+          "method": "PUT",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1369699412",
+      "parentFolderId": "177776452",
+      "title": "deletePost",
+      "sortNumber": 1734619133394000,
+      "steps": [
+        {
+          "id": "151757633",
+          "title": "deletePost",
+          "url": "http://localhost:3001/api/post/676470769ad7353509550d3a",
+          "method": "DELETE",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "785788127",
+      "parentFolderId": "177776452",
+      "title": "getAllPosts",
+      "sortNumber": 1734619133398000,
+      "steps": [
+        {
+          "id": "1715329996",
+          "title": "getAllPosts",
+          "url": "http://localhost:3001/api/post/all",
+          "method": "GET",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "133719210",
+      "parentFolderId": "177776452",
+      "title": "likeUnlikePost",
+      "sortNumber": 1734619133403000,
+      "steps": [
+        {
+          "id": "1063260759",
+          "title": "likeUnlikePost",
+          "url": "",
+          "method": "POST",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1596105525",
+      "parentFolderId": "177776452",
+      "title": "commentonPost",
+      "sortNumber": 1734619133409000,
+      "steps": [
+        {
+          "id": "344607266",
+          "title": "commentonPost",
+          "url": "",
+          "method": "POST",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "877976448",
+      "parentFolderId": "177776452",
+      "title": "deleteonComment",
+      "sortNumber": 1734619133414000,
+      "steps": [
+        {
+          "id": "1841070765",
+          "title": "deleteonComment",
+          "url": "",
+          "method": "DELETE",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "226431499",
+      "parentFolderId": "1673715663",
+      "title": "sendMessage",
+      "sortNumber": 1734619133419000,
+      "steps": [
+        {
+          "id": "988231992",
+          "title": "sendMessage",
+          "url": "",
+          "method": "POST",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1520519830",
+      "parentFolderId": "1673715663",
+      "title": "getAllMessages",
+      "sortNumber": 1734619133427000,
+      "steps": [
+        {
+          "id": "302608771",
+          "title": "getAllMessages",
+          "url": "",
+          "method": "GET",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "868974945",
+      "parentFolderId": "955586138",
+      "title": "myProfile",
+      "sortNumber": 1734619133431000,
+      "steps": [
+        {
+          "id": "1798547470",
+          "title": "myProfile",
+          "url": "https://social-media-platform-l27s.onrender.com/api/user/me",
+          "method": "GET",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "150878700",
+      "parentFolderId": "955586138",
+      "title": "userProfile",
+      "sortNumber": 1734619133436000,
+      "steps": [
+        {
+          "id": "1080418457",
+          "title": "userProfile",
+          "url": "",
+          "method": "GET",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1612738679",
+      "parentFolderId": "955586138",
+      "title": "updatePassword",
+      "sortNumber": 1734619133439000,
+      "steps": [
+        {
+          "id": "428351332",
+          "title": "updatePassword",
+          "url": "",
+          "method": "POST",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "961194178",
+      "parentFolderId": "955586138",
+      "title": "updateProfile",
+      "sortNumber": 1734619133443000,
+      "steps": [
+        {
+          "id": "1991399407",
+          "title": "updateProfile",
+          "url": "",
+          "method": "PUT",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "377284429",
+      "parentFolderId": "955586138",
+      "title": "followandUnfollowUser",
+      "sortNumber": 1734619133450000,
+      "steps": [
+        {
+          "id": "1340378746",
+          "title": "followandUnfollowUser",
+          "url": "",
+          "method": "POST",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    },
+    {
+      "id": "1873223640",
+      "parentFolderId": "955586138",
+      "title": "userFollowerandFollowingData",
+      "sortNumber": 1734619133454000,
+      "steps": [
+        {
+          "id": "655279813",
+          "title": "userFollowerandFollowingData",
+          "url": "",
+          "method": "GET",
+          "type": "NONE",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "type": "NOT_SET"
+          },
+          "sslVerification": "NOT_SET",
+          "followRedirects": "NOT_SET",
+          "maxRedirects": 0,
+          "history": "NOT_SET",
+          "body": {
+            "json": null,
+            "xml": null,
+            "html": null,
+            "yaml": null,
+            "javascript": null,
+            "text": null,
+            "raw": null,
+            "graphqlQuery": null,
+            "graphqlVariables": null,
+            "form": null,
+            "binary": null
+          },
+          "beforeScript": "",
+          "afterScript": "",
+          "timeout": 0,
+          "validations": []
+        }
+      ]
+    }
+  ]
+}
