@@ -145,3 +145,15 @@ If you'd like to contribute to this project, please fork the repository and subm
 ---
 
 Feel free to update the repository and project-specific details to match your actual setup. This will help other developers (or yourself in the future) understand the structure and purpose of your project!
+
+---
+
+## Screenshots
+
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-19%20231723.png)
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-19%20231739.png)
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-19%20231749.png)
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-19%20232844.png)
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-20%20000602.png)
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-20%20000644.png)
+![](https://github.com/kvk1999/social-media-platform/blob/main/images/Screenshot%202024-12-20%20010008.png)
