@@ -81,23 +81,3 @@ export const logoutUser = TryCatch((req, res) => {
   });
 });
 
-export const getUserProfile = (req, res) => {
-  // Assuming `req.user` contains the decoded token data (user info)
-  const user = req.user;  // user info attached by the `isAuth` middleware
-
-  // Fetch user data from the database (e.g., MongoDB, SQL)
-  // Here we'll just send back a mock response, but you would typically query your database
-
-  const userProfile = {
-    id: user.id,  // user id from the JWT token payload
-    name: user.name,  // user name from the JWT token payload (if included)
-    email: user.email,  // user email from the JWT token payload (if included)
-    // You can also retrieve more data from the database here
-  };
-
-  // Send the user profile in the response
-  res.json({
-    message: "User profile fetched successfully",
-    data: userProfile
-  });
-};

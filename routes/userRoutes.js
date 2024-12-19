@@ -7,7 +7,6 @@ import {
   updateProfile,
   userFollowerandFollowingData,
   userProfile,
-  getUserProfile,
 } from "../controllers/userControllers.js";
 import uploadFile from "../middlewares/multer.js";
 
@@ -19,6 +18,5 @@ router.post("/:id", isAuth, updatePassword);
 router.put("/:id", isAuth, uploadFile, updateProfile);  // Correct usage
 router.post("/follow/:id", isAuth, followandUnfollowUser);
 router.get("/followdata/:id", isAuth, userFollowerandFollowingData);
-router.get('/profile', isAuth, getUserProfile);  // Use isAuth middleware
 
 export default router;
