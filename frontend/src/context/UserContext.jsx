@@ -9,15 +9,14 @@ export const UserContextProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Register user
   async function registerUser(formdata, navigate, fetchPosts) {
     setLoading(true);
     try {
       const { data } = await axios.post("/api/auth/register", formdata);
+
       toast.success(data.message);
       setIsAuth(true);
       setUser(data.user);
-      localStorage.setItem("authToken", data.token); // Store token
       navigate("/");
       setLoading(false);
       fetchPosts();
@@ -27,16 +26,18 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // Login user
   async function loginUser(email, password, navigate, fetchPosts) {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/auth/login", { email, password });
+      const { data } = await axios.post("/api/auth/login", {
+        email,
+        password,
+        navigate,
+      });
 
       toast.success(data.message);
       setIsAuth(true);
       setUser(data.user);
-      localStorage.setItem("authToken", data.token); // Store token
       navigate("/");
       setLoading(false);
       fetchPosts();
@@ -46,7 +47,6 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // Fetch user data
   async function fetchUser() {
     try {
       const { data } = await axios.get("/api/user/me");
@@ -61,7 +61,6 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // Logout user
   async function logoutUser(navigate) {
     try {
       const { data } = await axios.get("/api/auth/logout");
@@ -70,7 +69,6 @@ export const UserContextProvider = ({ children }) => {
         toast.success(data.message);
         setUser([]);
         setIsAuth(false);
-        localStorage.removeItem("authToken"); // Clear token
         navigate("/login");
       }
     } catch (error) {
@@ -78,7 +76,6 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // Follow user
   async function followUser(id, fetchUser) {
     try {
       const { data } = await axios.post("/api/user/follow/" + id);
@@ -90,7 +87,6 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // Update profile pic
   async function updateProfilePic(id, formdata, setFile) {
     try {
       const { data } = await axios.put("/api/user/" + id, formdata);
@@ -101,8 +97,6 @@ export const UserContextProvider = ({ children }) => {
       toast.error(error.response.data.message);
     }
   }
-
-  // Update profile name
   async function updateProfileName(id, name, setShowInput) {
     try {
       const { data } = await axios.put("/api/user/" + id, { name });
@@ -114,16 +108,9 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // Fetch user on mount
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      fetchUser(); // Automatically fetch user if a token exists
-    } else {
-      setLoading(false); // If no token, just stop loading
-    }
+    fetchUser();
   }, []);
-
   return (
     <UserContext.Provider
       value={{
